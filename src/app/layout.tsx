@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata = {
   title: "Amazon clone",
   description: "this is test project by lxllx",
+  icons: "favicon.png",
 };
 
 export default function RootLayout({
