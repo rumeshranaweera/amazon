@@ -46,7 +46,7 @@ function Product({
         </p>
       </div>
       {hasPrime && (
-        <div className="flex items-center space-x-2 -mt-5 mx-auto ">
+        <div className="flex items-center space-x-2 -mt-5 ">
           <Image
             src={
               "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Amazon_Prime_Logo.svg/2560px-Amazon_Prime_Logo.svg.png"

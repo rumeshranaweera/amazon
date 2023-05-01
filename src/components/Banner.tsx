@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 const images = [
   "https://links.papareact.com/gi1",
   "https://links.papareact.com/6ff",
@@ -41,6 +42,14 @@ function Banner() {
   const swipePower = (offset: number, velocity: number) => {
     return Math.abs(offset) * velocity;
   };
+
+  useEffect(() => {
+    const autoPlay = setInterval(() => {
+      paginate(1);
+    }, 3000);
+    return () => clearInterval(autoPlay);
+  }, [imageIndex]);
+
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
     if (newDirection < 0) {
@@ -64,7 +73,6 @@ function Banner() {
       <div className="absolute w-full h-32 bg-gradient-to-t from-gray-100 z-20 bottom-0" />
       <AnimatePresence initial={false} custom={direction}>
         <motion.img
-          loading="lazy"
           className="object-cover h-full w-full object-top"
           key={page}
           src={images[imageIndex]}
@@ -90,18 +98,19 @@ function Banner() {
             }
           }}
         />
+        {/* top-[calc(50%_-_20px)] */}
       </AnimatePresence>
       <div
-        className="absolute right-0 top-[calc(50%_-_20px)] w-10 h-10 bg-white rounded-full text-center select-none text-3xl"
+        className="absolute flex items-center right-0 top-0 w-10 h-full rounded-full text-center select-none text-3xl"
         onClick={() => paginate(1)}
       >
-        {"‣"}
+        <ChevronRightIcon />
       </div>
       <div
-        className="absolute left-0 top-[calc(50%_-_20px)] w-10 h-10 bg-white rounded-full text-center select-none text-3xl rotate-180"
+        className="absolute flex items-center left-0 top-0 w-10 h-full  rounded-full text-center select-none text-3xl"
         onClick={() => paginate(-1)}
       >
-        {"‣"}
+        <ChevronLeftIcon />
       </div>
     </div>
   );
