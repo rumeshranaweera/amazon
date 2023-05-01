@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import "./globals.css";
 import Provider from "@/components/Provider";
+import StoreProvider from "./(store)/StoreProvider";
 
 export const metadata = {
   title: "Amazon clone",
@@ -17,8 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gray-100">
         <Provider>
-          <Header />
-          {children}
+          <StoreProvider>
+            <Header />
+            {children}
+          </StoreProvider>
         </Provider>
       </body>
     </html>

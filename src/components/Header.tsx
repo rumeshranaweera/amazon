@@ -1,29 +1,36 @@
 "use client";
 import Image from "next/image";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSelector } from "react-redux";
+import { selectItems } from "@/app/(store)/features/cartSlice";
 
 export default function Header() {
+  const session = useSession();
+  const items = useSelector(selectItems);
+
   return (
     <header className="sticky top-0 z-50">
       {/* top nav */}
       <div className="flex items-center p-1 py-2 pl-6 bg-amazon_blue grow">
         <div className="flex items-center mx-2 mt-2 grow sm:grow-0">
-          <Image
-            src={"https://links.papareact.com/f90"}
-            width={150}
-            height={40}
-            style={{ objectFit: "contain" }}
-            alt="amazom logo"
-            className="cursor-pointer"
-            property="true"
-          />
+          <Link href={"/"}>
+            <Image
+              src={"https://links.papareact.com/f90"}
+              width={150}
+              height={40}
+              style={{ objectFit: "contain" }}
+              alt="amazom logo"
+              className="cursor-pointer"
+              property="true"
+            />
+          </Link>
         </div>
         {/* search */}
         <div className="items-center hidden h-12 overflow-hidden bg-yellow-400 rounded-md cursor-pointer sm:flex grow hover:bg-yellow-500">
@@ -34,12 +41,11 @@ export default function Header() {
           <MagnifyingGlassIcon className="h-12 p-4" />
         </div>
         {/* right*/}
-        <a
-          onClick={() => signIn()}
-          className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap [&_div]:cursor-pointer"
-        >
+        <a className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap [&_div]:cursor-pointer ">
           <div className="link">
-            <p>hello man</p>
+            <p onClick={() => (!session.data ? signIn() : signOut())}>
+              {session.data ? `Hello, ${session?.data?.user?.name}` : `sign In`}
+            </p>
             <p className="font-extrabold md:text-sm">Account & list</p>
           </div>
           <div className="link">
@@ -48,11 +54,11 @@ export default function Header() {
           </div>
           <div className="relative flex items-center link">
             <span className="absolute top-0 right-0 w-auto h-4 px-1 font-bold text-center text-black bg-yellow-400 rounded-full md:right-6">
-              1
+              {items.length}
             </span>
             <ShoppingCartIcon className="h-10" />
             <p className="hidden mt-2 font-extrabold md:inline md:text-sm ">
-              Cart
+              <Link href={"/checkout"}>Cart</Link>
             </p>
           </div>
         </a>
