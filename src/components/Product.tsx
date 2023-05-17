@@ -64,7 +64,7 @@ function Product({
         </p>
       </div>
       {hasPrime && (
-        <div className="flex items-center -mt-5 space-x-2 ">
+        <div className="flex items-center -mt-5 space-x-2">
           <Image
             src={
               "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Amazon_Prime_Logo.svg/2560px-Amazon_Prime_Logo.svg.png"
@@ -72,6 +72,7 @@ function Product({
             width={40}
             height={40}
             alt="prime"
+            className="h-auto"
           />
           <p className="text-base font-semibold text-gray-500">
             Free Next-day Delevery

@@ -41,7 +41,7 @@ export default function Header() {
           <MagnifyingGlassIcon className="h-12 p-4" />
         </div>
         {/* right*/}
-        <a className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap [&_div]:cursor-pointer ">
+        <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap [&_div]:cursor-pointer ">
           <div className="link">
             <p onClick={() => (!session.data ? signIn() : signOut())}>
               {session.data ? `Hello, ${session?.data?.user?.name}` : `sign In`}
@@ -61,7 +61,7 @@ export default function Header() {
               <Link href={"/checkout"}>Cart</Link>
             </p>
           </div>
-        </a>
+        </div>
       </div>
       {/* bottom nav */}
       <div className="flex items-center p-2 pl-6 space-x-3 text-sm text-white bg-amazon_blue-light">

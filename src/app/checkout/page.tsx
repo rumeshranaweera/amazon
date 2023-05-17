@@ -6,12 +6,42 @@ import { selectItems, selectTotal } from "../(store)/features/cartSlice";
 import CheckoutProduct from "@/components/CheckoutProduct";
 import { AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
+import { loadStripe } from "@stripe/stripe-js";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
+);
 const Checkout = () => {
-  const { status } = useSession();
+  const router = useRouter();
+  const { status, data } = useSession();
   const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
-  console.log(status);
+
+  const createCheckoutSession = async () => {
+    const stripe = await stripePromise;
+
+    const checkoutSession = await axios
+      .post("api/create-checkout-session", {
+        items,
+        email: data?.user?.email,
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        router.push(res.data.data);
+      });
+
+    //Redirect user
+
+    //     const result = await stripe?.redirectToCheckout({
+    //       sessionId: checkoutSession.data.id,
+    //     });
+    //
+    //     if (result?.error) {
+    //       alert(result.error.message);
+    //     }
+  };
 
   return (
     <div className="bg-gray-100 ">
@@ -53,7 +83,9 @@ const Checkout = () => {
                 </span>
               </h2>
               <button
-                disabled={status === "unauthenticated" ? true : false}
+                role="link"
+                disabled={status === "unauthenticated"}
+                onClick={createCheckoutSession}
                 className={`button ${
                   status === "unauthenticated" &&
                   "from-gray-300 to-gray-500 border-gray-300 text-gray-300 cursor-not-allowed hover:!bg-gray-500"
