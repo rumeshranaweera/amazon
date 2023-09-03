@@ -28,7 +28,6 @@ const Checkout = () => {
         email: data?.user?.email,
       })
       .then((res) => {
-        console.log(res.data.data);
         router.push(res.data.data);
       });
 

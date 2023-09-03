@@ -6,12 +6,16 @@ export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: "2022-11-15",
   });
-  const transformedData = items.map((item: any) => ({
+  const transformedData = items.map((item: product) => ({
     quantity: 1,
     price_data: {
       currency: "usd",
       unit_amount: item.price * 100,
-      product_data: { name: item.title, images: [item.image] },
+      product_data: {
+        name: item.title,
+        images: [item.image],
+        description: item.description,
+      },
     },
   }));
 
@@ -19,15 +23,14 @@ export async function POST(request: Request) {
     payment_method_types: ["card"],
     line_items: transformedData,
     shipping_address_collection: {
-      allowed_countries: ["GB", "US", "CA", "SL"],
+      allowed_countries: ["GB", "US", "CA", "LK"],
     },
-    // shipping_rates: ["shr_1N6ubwDZAbdWSYIq9QlhmcQ4"],
     shipping_options: [
       {
         shipping_rate_data: {
           type: "fixed_amount",
           fixed_amount: {
-            amount: 799,
+            amount: 499,
             currency: "usd",
           },
           display_name: "shipping cost",
