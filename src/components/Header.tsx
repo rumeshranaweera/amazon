@@ -52,15 +52,17 @@ export default function Header() {
             <p>Returns</p>
             <p className="font-extrabold md:text-sm ">& Orders</p>
           </div>
-          <div className="relative flex items-center link">
-            <span className="absolute top-0 right-0 w-auto h-4 px-1 font-bold text-center text-black bg-yellow-400 rounded-full md:right-6">
-              {items.length}
-            </span>
-            <ShoppingCartIcon className="h-10" />
-            <p className="hidden mt-2 font-extrabold md:inline md:text-sm ">
-              <Link href={"/checkout"}>Cart</Link>
-            </p>
-          </div>
+          <Link href={"/checkout"}>
+            <div className="relative flex items-center link">
+              <span className="absolute top-0 right-0 w-auto h-4 px-1 font-bold text-center text-black bg-yellow-400 rounded-full md:right-6">
+                {items.length}
+              </span>
+              <ShoppingCartIcon className="h-10" />
+              <p className="hidden mt-2 font-extrabold md:inline md:text-sm ">
+                <span>Cart</span>
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
       {/* bottom nav */}
