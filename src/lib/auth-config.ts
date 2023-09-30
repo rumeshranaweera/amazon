@@ -10,6 +10,7 @@ const authOptions: AuthOptions = {
     }),
     // Add more providers here if needed
   ],
+  secret: process.env.AUTH_SECRET,
 };
 
 export default authOptions;
